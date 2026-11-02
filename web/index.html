@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hạt Mầm Vàng — Prototype vòng lặp làm nông (Babylon.js)</title>
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #222; font-family: system-ui, sans-serif; }
+  #renderCanvas { width: 100%; height: 100%; display: block; touch-action: none; }
+  #status {
+    position: absolute; top: 10px; left: 10px; color: #fff;
+    background: rgba(0, 0, 0, 0.55); padding: 10px 12px; border-radius: 8px;
+    font-size: 16px; line-height: 1.5; white-space: pre-line;
+  }
+  #prompt {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    color: #fff; background: rgba(0, 0, 0, 0.55); padding: 8px 14px;
+    border-radius: 8px; font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<canvas id="renderCanvas"></canvas>
+<div id="status"></div>
+<div id="prompt"></div>
+<script src="main.js"></script>
+</body>
+</html>
