@@ -19,3 +19,9 @@
 - Current phase: Phase 5 — Implement. Code written locally, not yet
   pushed to Mus. Next: push approval, user Pull + Play, then playtest
   debrief and prototype report with a PROCEED / PIVOT / KILL verdict.
+- Fix applied locally 2026-11-02 after first Play: PrototypePlayer
+  rewritten to Input System (legacy Input threw InvalidOperationException
+  because Active Input Handler is Input System only), player start
+  moved to z -8 so plots are in front of the camera, and UI text
+  pivots fixed so status/prompt text is not clipped off-screen.
+  Fix not yet pushed.

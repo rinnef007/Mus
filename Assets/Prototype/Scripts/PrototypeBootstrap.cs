@@ -39,14 +39,17 @@ namespace HatMamVang.Prototype
             canvasObject.AddComponent<GraphicRaycaster>();
 
             _manager.StatusText = CreateText(canvasObject.transform, "StatusText",
-                new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(10f, -10f), 20);
+                new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(10f, -10f), 20,
+                new Vector2(0f, 1f));
+            _manager.StatusText.alignment = TextAnchor.UpperLeft;
             _manager.PromptText = CreateText(canvasObject.transform, "PromptText",
-                new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 40f), 22);
+                new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 40f), 22,
+                new Vector2(0.5f, 0f));
             _manager.PromptText.alignment = TextAnchor.MiddleCenter;
         }
 
         private Text CreateText(Transform parent, string name, Vector2 anchorMin,
-            Vector2 anchorMax, Vector2 anchoredPosition, int fontSize)
+            Vector2 anchorMax, Vector2 anchoredPosition, int fontSize, Vector2 pivot)
         {
             GameObject textObject = new GameObject(name);
             textObject.transform.SetParent(parent, false);
@@ -57,6 +60,7 @@ namespace HatMamVang.Prototype
             RectTransform rect = text.GetComponent<RectTransform>();
             rect.anchorMin = anchorMin;
             rect.anchorMax = anchorMax;
+            rect.pivot = pivot;
             rect.anchoredPosition = anchoredPosition;
             rect.sizeDelta = new Vector2(500f, 150f);
             return text;
@@ -64,9 +68,12 @@ namespace HatMamVang.Prototype
 
         private GameObject CreatePlayer()
         {
+            // Player starts south of the plots (plots are around z -4 to 0),
+            // with the camera behind the player, so the plots are in front
+            // of the camera. Starting at z +8 put the plots behind the camera.
             GameObject player = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             player.name = "PrototypePlayer";
-            player.transform.position = new Vector3(0f, 1f, 8f);
+            player.transform.position = new Vector3(0f, 1f, -8f);
             Destroy(player.GetComponent<CapsuleCollider>());
 
             CharacterController controller = player.AddComponent<CharacterController>();

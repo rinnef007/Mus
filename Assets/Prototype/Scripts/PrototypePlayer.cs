@@ -1,5 +1,6 @@
 // Prototype only — throwaway code, see PrototypeGameManager header.
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace HatMamVang.Prototype
 {
@@ -14,8 +15,10 @@ namespace HatMamVang.Prototype
     /// WASD moves, E interacts with the nearest interactable in range.
     /// Camera is a fixed-angle follow camera (see PrototypeCameraFollow);
     /// a final third-person orbit camera is production work, not prototype work.
-    /// Uses legacy Input on purpose: no Input System asset wiring needed
-    /// for a throwaway build.
+    /// Uses the Input System package on purpose: this project sets
+    /// Active Input Handler to Input System only, so legacy
+    /// UnityEngine.Input throws InvalidOperationException here.
+    /// Actions are created in code, so no Input Action asset wiring is needed.
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
     public class PrototypePlayer : MonoBehaviour
@@ -25,19 +28,56 @@ namespace HatMamVang.Prototype
         public PrototypeGameManager GameManager;
 
         private CharacterController _controller;
+        private InputAction _moveAction;
+        private InputAction _interactAction;
         private IPrototypeInteractable _nearest;
         private float _verticalVelocity;
 
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
+
+            _moveAction = new InputAction("Move", InputActionType.Value);
+            _moveAction.AddCompositeBinding("2DVector")
+                .With("Up", "<Keyboard>/w")
+                .With("Down", "<Keyboard>/s")
+                .With("Left", "<Keyboard>/a")
+                .With("Right", "<Keyboard>/d");
+            _moveAction.AddCompositeBinding("2DVector")
+                .With("Up", "<Keyboard>/upArrow")
+                .With("Down", "<Keyboard>/downArrow")
+                .With("Left", "<Keyboard>/leftArrow")
+                .With("Right", "<Keyboard>/rightArrow");
+
+            _interactAction = new InputAction("Interact", InputActionType.Button, "<Keyboard>/e");
+        }
+
+        private void OnEnable()
+        {
+            _moveAction.Enable();
+            _interactAction.Enable();
+            _interactAction.performed += OnInteractPerformed;
+        }
+
+        private void OnDisable()
+        {
+            _interactAction.performed -= OnInteractPerformed;
+            _moveAction.Disable();
+            _interactAction.Disable();
+        }
+
+        private void OnInteractPerformed(InputAction.CallbackContext context)
+        {
+            if (_nearest != null)
+            {
+                _nearest.Interact(this);
+            }
         }
 
         private void Update()
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-            Vector3 move = new Vector3(h, 0f, v);
+            Vector2 input = _moveAction.ReadValue<Vector2>();
+            Vector3 move = new Vector3(input.x, 0f, input.y);
             if (move.sqrMagnitude > 1f)
             {
                 move.Normalize();
@@ -62,11 +102,6 @@ namespace HatMamVang.Prototype
             }
 
             FindNearestInteractable();
-
-            if (Input.GetKeyDown(KeyCode.E) && _nearest != null)
-            {
-                _nearest.Interact(this);
-            }
         }
 
         private void FindNearestInteractable()

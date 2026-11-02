@@ -16,7 +16,12 @@ Biết là đúng nếu trong 10 phút chơi thử, người chơi tự làm đ�
 
 ## Cách chơi
 
-- WASD di chuyển, E tương tác với thứ ở gần nhất.
+- WASD di chuyển, E tương tác với thứ ở gần nhất. Di chuyển dùng
+  Input System package, vì project này đặt Active Input Handler
+  là Input System only, dùng legacy Input sẽ báo lỗi
+  InvalidOperationException và nhân vật không di chuyển được.
+- Người chơi bắt đầu ở phía nam ruộng, camera ở sau lưng, nên
+  ruộng, trạm chế biến và sạp chợ đều nằm trước mặt khi bấm Play.
 - Ruộng 4x4 ở giữa: E lần lượt là cuốc đất, gieo hạt, tưới nước,
   đợi cây lớn trong 8 giây, rồi thu hoạch được 2 lúa.
 - Hộp vàng bên phải là trạm chế biến: 3 lúa -> 1 gạo, mất 3 giây.
