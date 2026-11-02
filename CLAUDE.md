@@ -8,7 +8,7 @@ Concept đầy đủ ở `design/gdd/game-concept.md`.
 
 ## Technology Stack
 
-- **Engine**: Unity 6.3 LTS
+- **Engine**: Unity 6000.6.7f1 (Unity 6.6, current release, not LTS — chosen by the user on 2026-11-02 because this editor version is already installed)
 - **Language**: C#
 - **Build System**: Unity Build Pipeline
 - **Asset Pipeline**: Unity Asset Import Pipeline + Addressables

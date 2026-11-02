@@ -11,7 +11,10 @@ framework:
 
 engine:
   name: "Unity"
-  version: "6.3 LTS"
+  version: "6000.6.7f1"
+  # Unity 6.6 current release, not LTS. Chosen by the user on 2026-11-02
+  # because this editor version is already installed in Unity Hub.
+  # Earlier pin was Unity 6.3 LTS; do not revert without user approval.
   language: "C#"
   rendering: "URP"
   physics: "PhysX"
