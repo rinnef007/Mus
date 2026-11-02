@@ -1,0 +1,45 @@
+# CCGS project configuration — single source of truth for project settings.
+# Schema: grep the `## <key>` section of .claude/docs/effects-map.md in the
+# Claude Code Game Studios source — it is ~31k tokens whole, ~900 per section.
+# Do not open it entire.
+
+schema_version: 1
+
+framework:
+  version: 1.2.0
+  last_upgraded: 2026-11-02
+
+engine:
+  name: "Unity"
+  version: "6.3 LTS"
+  language: "C#"
+  rendering: "URP"
+  physics: "PhysX"
+  # TODO: set the Unity Editor full path on the developer machine via settings.
+  # Installed at pin time: NOT DETERMINED — Rin's computer cannot probe the
+  # user's local Unity Hub install, so this is not a claim that Unity is absent.
+  path: "[TO BE CONFIGURED]"
+
+specialists:
+  code: "unity-specialist"
+  shader: "unity-shader-specialist"
+  ui: "unity-ui-specialist"
+  additional: ["unity-dots-specialist", "unity-addressables-specialist"]
+
+naming:
+  classes: PascalCase
+  variables: camelCase
+  constants: SCREAMING_SNAKE   # UNVERIFIED — not sourceable from
+                               # docs/engine-reference/unity/; confirm before relying on it
+  signals: PascalCase
+  files: PascalCase
+  scenes: PascalCase
+
+commands:
+  # TODO: confirm these for the developer machine and build target.
+  # Build target and Unity Editor path were not provided at pin time,
+  # so these rows are placeholders, not a working build command.
+  build: "[TO BE CONFIGURED]"
+  test: "[TO BE CONFIGURED]"
+  run: "[TO BE CONFIGURED]"
+  smoke: "[TO BE CONFIGURED]"
